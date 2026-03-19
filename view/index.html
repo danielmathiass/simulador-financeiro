@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InovaTech — Simulador Financeiro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="hdr">
+        <div class="logo">
+            <div class="logo-mark"><svg viewBox="0 0 14 14">
+                    <polygon points="7,1 13,4 13,10 7,13 1,10 1,4" />
+                </svg></div>
+            <div>
+                <div class="logo-name">InovaTech</div>
+                <div class="logo-desc">Simulador Financeiro · Desafio 4.0</div>
+            </div>
+        </div>
+        <div style="display:flex;gap:8px">
+            <span class="hdr-badge">Matemática para Negócios</span>
+            <span class="hdr-badge">UNDB · 2026.1</span>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <div class="tab act" onclick="goTab(0)"><span class="tn">1</span>Precificação</div>
+        <div class="tab" onclick="goTab(1)"><span class="tn">2</span>Ponto de Equilíbrio</div>
+        <div class="tab" onclick="goTab(2)"><span class="tn">3</span>Cenários de Crescimento</div>
+        <div class="tab" onclick="goTab(3)"><span class="tn">4</span>Alocação de Recursos</div>
+        <div class="tab" onclick="goTab(4)"><span class="tn">5</span>Sobre o projeto</div>
+
+    </div>
+
+    <div class="content">
+
+        <!-- ══════════════════════════════════════════════
+     MÓDULO 1 — PRECIFICAÇÃO
+══════════════════════════════════════════════ -->
+        <div class="mod act" id="m0">
+            <div class="g2">
+
+                <!-- Painel de Inputs -->
+                <div class="card">
+
+                    <div class="isect">
+                        <div class="isect-ttl">Custos Fixos Mensais</div>
+
+                        <div class="srow">
+                            <div class="slbl">Servidores em nuvem</div>
+                            <input type="range" id="r-serv" min="3000" max="30000" step="500" value="12000"
+                                oninput="u1()">
+                            <div class="sval" id="v-serv">R$ 12.000</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Equipe (12 pessoas)</div>
+                            <input type="range" id="r-equipe" min="40000" max="150000" step="1000" value="84000"
+                                oninput="u1()">
+                            <div class="sval" id="v-equipe">R$ 84.000</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Marketing digital</div>
+                            <input type="range" id="r-mktg" min="2000" max="40000" step="500" value="15000"
+                                oninput="u1()">
+                            <div class="sval" id="v-mktg">R$ 15.000</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Outros custos</div>
+                            <input type="range" id="r-outros" min="1000" max="20000" step="500" value="9000"
+                                oninput="u1()">
+                            <div class="sval" id="v-outros">R$ 9.000</div>
+                        </div>
+                        <div class="sumrow tot"><span>Total Custos Fixos</span><span id="tcf">R$ 120.000</span></div>
+                    </div>
+
+                    <div class="isect">
+                        <div class="isect-ttl">Custo Variável</div>
+                        <div class="srow">
+                            <div class="slbl">Por cliente / mês</div>
+                            <input type="range" id="r-cv" min="5" max="80" step="1" value="25" oninput="u1()">
+                            <div class="sval" id="v-cv">R$ 25</div>
+                        </div>
+                    </div>
+
+                    <div class="isect">
+                        <div class="isect-ttl">Parâmetros de Negócio</div>
+                        <div class="srow">
+                            <div class="slbl">Clientes ativos</div>
+                            <input type="range" id="r-cli" min="200" max="3000" step="50" value="1200" oninput="u1()">
+                            <div class="sval" id="v-cli">1.200</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Margem desejada</div>
+                            <input type="range" id="r-mg" min="5" max="60" step="1" value="20" oninput="u1()">
+                            <div class="sval" id="v-mg">20%</div>
+                        </div>
+                    </div>
+
+                    <div class="isect-ttl">Composição dos Custos Totais</div>
+                    <div class="cbar">
+                        <div class="cseg" id="b-serv" style="background:#1D9E75"></div>
+                        <div class="cseg" id="b-equipe" style="background:#185FA5"></div>
+                        <div class="cseg" id="b-mktg" style="background:#BA7517"></div>
+                        <div class="cseg" id="b-outros" style="background:#888780"></div>
+                        <div class="cseg" id="b-var" style="background:#E24B4A"></div>
+                    </div>
+                    <div class="leg">
+                        <div class="li">
+                            <div class="ld" style="background:#1D9E75"></div>Servidores
+                        </div>
+                        <div class="li">
+                            <div class="ld" style="background:#185FA5"></div>Equipe
+                        </div>
+                        <div class="li">
+                            <div class="ld" style="background:#BA7517"></div>Marketing
+                        </div>
+                        <div class="li">
+                            <div class="ld" style="background:#888780"></div>Outros
+                        </div>
+                        <div class="li">
+                            <div class="ld" style="background:#E24B4A"></div>Variáveis
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Painel de Resultados -->
+                <div>
+                    <div class="kpis kpis-2">
+                        <div class="kpi pos">
+                            <div class="kpi-lbl">Preço Ideal por Cliente</div>
+                            <div class="kpi-val" id="k1-p">R$ 150</div>
+                            <div class="kpi-sub">por assinatura / mês</div>
+                        </div>
+                        <div class="kpi inf">
+                            <div class="kpi-lbl">Receita Mensal Projetada</div>
+                            <div class="kpi-val" id="k1-r">R$ 180.000</div>
+                            <div class="kpi-sub" id="k1-rs">com 1.200 clientes</div>
+                        </div>
+                        <div class="kpi pos" id="k1-lcard">
+                            <div class="kpi-lbl">Lucro Líquido Mensal</div>
+                            <div class="kpi-val" id="k1-l">R$ 30.000</div>
+                            <div class="kpi-sub" id="k1-ls">margem de 16,7%</div>
+                        </div>
+                        <div class="kpi wrn">
+                            <div class="kpi-lbl">Custo Total por Cliente</div>
+                            <div class="kpi-val" id="k1-cu">R$ 125</div>
+                            <div class="kpi-sub">fixo rateado + variável</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="ctitle">Receita vs. Custos</div>
+                        <div class="cwrap" style="height:230px"><canvas id="c1"></canvas></div>
+                        <div class="sbox ok" id="sb1">✓ Operando com margem positiva.</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="ctitle">Decomposição do Preço</div>
+                        <div class="sumrow"><span style="color:var(--text-m)">Custo variável unitário</span><span
+                                id="d-cv">R$ 25,00</span></div>
+                        <div class="sumrow"><span style="color:var(--text-m)">Rateio dos custos fixos</span><span
+                                id="d-cf">R$ 100,00</span></div>
+                        <div class="sumrow"><span style="color:var(--text-m)">Custo unitário total</span><span
+                                id="d-ct">R$ 125,00</span></div>
+                        <div class="sumrow"><span style="color:var(--text-m)">Margem adicionada (20%)</span><span
+                                id="d-mv" style="color:var(--teal)">+ R$ 25,00</span></div>
+                        <div class="sumrow tot"><span>Preço ideal sugerido</span><span id="d-pf"
+                                style="color:var(--teal)">R$ 150,00</span></div>
+
+                        <div class="fcard">
+                            <strong style="font-size:12px">Fórmula:</strong>&nbsp;
+                            <code>Preço = (CF / n + CV) × (1 + Margem)</code>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════
+     MÓDULO 2 — PONTO DE EQUILÍBRIO
+══════════════════════════════════════════════ -->
+        <div class="mod" id="m1">
+
+            <div class="kpis kpis-4" style="margin-bottom:16px">
+                <div class="kpi pos">
+                    <div class="kpi-lbl">Ponto de Equilíbrio</div>
+                    <div class="kpi-val" id="k2-pe">960</div>
+                    <div class="kpi-sub">clientes mínimos</div>
+                </div>
+                <div class="kpi inf">
+                    <div class="kpi-lbl">Receita no Break-Even</div>
+                    <div class="kpi-val" id="k2-rpe">R$ 144.000</div>
+                    <div class="kpi-sub">mensal</div>
+                </div>
+                <div class="kpi pos" id="k2-scard">
+                    <div class="kpi-lbl">Posição Atual</div>
+                    <div class="kpi-val" id="k2-diff">+240</div>
+                    <div class="kpi-sub" id="k2-dsub">clientes acima do PE</div>
+                </div>
+                <div class="kpi pos" id="k2-mscard">
+                    <div class="kpi-lbl">Margem de Segurança</div>
+                    <div class="kpi-val" id="k2-ms">20,0%</div>
+                    <div class="kpi-sub">folga sobre o mínimo</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="shdr">
+                    <div>
+                        <div class="stitle">Gráfico Ponto de Equilíbrio</div>
+                        <div class="sdesc">Receita total × Custos totais em função do número de clientes</div>
+                    </div>
+                    <div class="scenleg">
+                        <span><span class="lline" style="background:#1D9E75"></span>Receita</span>
+                        <span><span class="lline" style="background:#E24B4A"></span>Custo Total</span>
+                        <span><span class="lline"
+                                style="background:#185FA5;height:2px;border-top:2px dashed #185FA5"></span>PE</span>
+                    </div>
+                </div>
+                <div class="cwrap" style="height:310px"><canvas id="c2"></canvas></div>
+                <div class="sbox ok" id="sb2">✓ Empresa opera acima do ponto de equilíbrio.</div>
+            </div>
+
+            <div class="card">
+                <div class="ctitle">Cálculo Detalhado</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+                    <div>
+                        <div class="sumrow"><span style="color:var(--text-m)">Preço por cliente (P)</span><span
+                                id="d2-p">R$ 150</span></div>
+                        <div class="sumrow"><span style="color:var(--text-m)">Custo variável unitário (CV)</span><span
+                                id="d2-cv">R$ 25</span></div>
+                        <div class="sumrow"><span style="color:var(--text-m)">Margem de contribuição (MC = P −
+                                CV)</span><span id="d2-mc">R$ 125</span></div>
+                        <div class="sumrow tot"><span>MC unitária em %</span><span id="d2-mcp">83,3%</span></div>
+                    </div>
+                    <div>
+                        <div class="sumrow"><span style="color:var(--text-m)">Custos fixos totais (CF)</span><span
+                                id="d2-cf">R$ 120.000</span></div>
+                        <div class="sumrow"><span style="color:var(--text-m)">Fórmula: CF ÷ MC</span><span
+                                id="d2-form">120.000 ÷ 125</span></div>
+                        <div class="sumrow tot"><span>Ponto de Equilíbrio</span><span id="d2-pe"
+                                style="color:var(--teal)">960 clientes</span></div>
+                    </div>
+                </div>
+                <div class="fcard">
+                    <strong style="font-size:12px">Fórmula:</strong>&nbsp;
+                    <code>PE = Custos Fixos / (Preço − Custo Variável Unitário)</code>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ══════════════════════════════════════════════
+     MÓDULO 3 — CENÁRIOS DE CRESCIMENTO
+══════════════════════════════════════════════ -->
+        <div class="mod" id="m2">
+            <div class="g2">
+
+                <!-- Controles -->
+                <div class="card">
+
+                    <div class="isect">
+                        <div class="isect-ttl">Situação Atual</div>
+                        <div class="srow">
+                            <div class="slbl">Clientes ativos</div>
+                            <input type="range" id="r3-cli" min="500" max="3000" step="50" value="1200" oninput="u3()">
+                            <div class="sval" id="v3-cli">1.200</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Ticket médio (R$)</div>
+                            <input type="range" id="r3-preco" min="80" max="350" step="5" value="150" oninput="u3()">
+                            <div class="sval" id="v3-preco">R$ 150</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Crescimento mensal CF</div>
+                            <input type="range" id="r3-cf" min="0" max="3" step="0.1" value="1.5" oninput="u3()">
+                            <div class="sval" id="v3-cf">1,5%</div>
+                        </div>
+                    </div>
+
+                    <div class="isect">
+                        <div class="isect-ttl">Crescimento de Clientes / Mês</div>
+                        <div class="srow">
+                            <div class="slbl" style="color:var(--red-l)">&#9660; Pessimista</div>
+                            <input type="range" id="r3-pess" min="-5" max="0" step="0.5" value="-1.5" oninput="u3()">
+                            <div class="sval" id="v3-pess" style="color:var(--red-l)">−1,5%</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl" style="color:var(--amber)">&#9654; Realista</div>
+                            <input type="range" id="r3-real" min="0" max="7" step="0.5" value="2" oninput="u3()">
+                            <div class="sval" id="v3-real" style="color:var(--amber)">+2,0%</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl" style="color:var(--teal)">&#9650; Otimista</div>
+                            <input type="range" id="r3-otim" min="2" max="12" step="0.5" value="5" oninput="u3()">
+                            <div class="sval" id="v3-otim" style="color:var(--teal)">+5,0%</div>
+                        </div>
+                    </div>
+
+                    <div class="isect">
+                        <div class="isect-ttl">Meta dos Investidores (Receita Acumulada)</div>
+                        <div class="srow">
+                            <div class="slbl">Meta em 36 meses</div>
+                            <input type="range" id="r3-meta" min="500000" max="8000000" step="100000" value="3000000"
+                                oninput="u3()">
+                            <div class="sval" id="v3-meta" style="font-size:11px">R$ 3M</div>
+                        </div>
+                    </div>
+
+                    <div class="isect-ttl" style="margin-bottom:10px">Horizonte de Análise</div>
+                    <div class="pills">
+                        <button class="pill p12" id="p12" onclick="setH(12)">12 meses</button>
+                        <button class="pill p24" id="p24" onclick="setH(24)">24 meses</button>
+                        <button class="pill p36 act" id="p36" onclick="setH(36)">36 meses</button>
+                    </div>
+                </div>
+
+                <!-- Gráfico + Tabela -->
+                <div>
+                    <div class="card">
+                        <div class="shdr">
+                            <div>
+                                <div class="stitle">Projeção de Receita Mensal</div>
+                                <div class="sdesc" id="h-lbl">Próximos 36 meses</div>
+                            </div>
+                            <div class="scenleg">
+                                <span><span class="lline" style="background:#E24B4A"></span>Pessimista</span>
+                                <span><span class="lline" style="background:#BA7517"></span>Realista</span>
+                                <span><span class="lline" style="background:#1D9E75"></span>Otimista</span>
+                                <span><span class="lline"
+                                        style="background:#888;border-top:2px dashed #888"></span>Meta/mês</span>
+                            </div>
+                        </div>
+                        <div class="cwrap" style="height:270px"><canvas id="c3"></canvas></div>
+                    </div>
+
+                    <div class="card">
+                        <div class="ctitle">Projeções Comparativas por Cenário</div>
+                        <table class="ptable">
+                            <thead>
+                                <tr>
+                                    <th>Período</th>
+                                    <th>Pessimista</th>
+                                    <th>Realista</th>
+                                    <th>Otimista</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ptbody"></tbody>
+                        </table>
+                        <div class="sbox ok" id="sb3">Calculando...</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════
+     MÓDULO 4 — ALOCAÇÃO DE RECURSOS
+══════════════════════════════════════════════ -->
+        <div class="mod" id="m3">
+            <div class="g2">
+
+                <!-- Inputs -->
+                <div class="card">
+                    <div class="isect">
+                        <div class="isect-ttl">Orçamento Mensal por Área</div>
+                        <div class="srow">
+                            <div class="slbl">Servidores / Infra</div>
+                            <input type="range" id="r4-serv" min="3000" max="30000" step="500" value="12000"
+                                oninput="u4()">
+                            <div class="sval" id="v4-serv">R$ 12.000</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Equipe técnica</div>
+                            <input type="range" id="r4-tec" min="20000" max="120000" step="1000" value="56000"
+                                oninput="u4()">
+                            <div class="sval" id="v4-tec">R$ 56.000</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Suporte ao cliente</div>
+                            <input type="range" id="r4-sup" min="3000" max="40000" step="500" value="18000"
+                                oninput="u4()">
+                            <div class="sval" id="v4-sup">R$ 18.000</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Marketing</div>
+                            <input type="range" id="r4-mkt" min="2000" max="50000" step="500" value="15000"
+                                oninput="u4()">
+                            <div class="sval" id="v4-mkt">R$ 15.000</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Administrativo</div>
+                            <input type="range" id="r4-adm" min="2000" max="20000" step="500" value="10000"
+                                oninput="u4()">
+                            <div class="sval" id="v4-adm">R$ 10.000</div>
+                        </div>
+                        <div class="sumrow tot"><span>Total de custos</span><span id="v4-tot">R$ 111.000</span></div>
+                    </div>
+
+                    <div class="isect">
+                        <div class="isect-ttl">Referência de Receita</div>
+                        <div class="srow">
+                            <div class="slbl">Receita mensal atual</div>
+                            <input type="range" id="r4-rec" min="50000" max="600000" step="5000" value="180000"
+                                oninput="u4()">
+                            <div class="sval" id="v4-rec">R$ 180.000</div>
+                        </div>
+                        <div class="srow">
+                            <div class="slbl">Clientes ativos</div>
+                            <input type="range" id="r4-cli" min="200" max="3000" step="50" value="1200" oninput="u4()">
+                            <div class="sval" id="v4-cli">1.200</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados -->
+                <div>
+                    <div class="kpis kpis-3">
+                        <div class="kpi pos" id="k4-mc">
+                            <div class="kpi-lbl">Margem Operacional</div>
+                            <div class="kpi-val" id="k4-mv">38,3%</div>
+                            <div class="kpi-sub">(Receita − Custos) / Receita</div>
+                        </div>
+                        <div class="kpi inf">
+                            <div class="kpi-lbl">Custo por Cliente</div>
+                            <div class="kpi-val" id="k4-cpc">R$ 93</div>
+                            <div class="kpi-sub" id="k4-cpcs">base 1.200 clientes</div>
+                        </div>
+                        <div class="kpi wrn" id="k4-pc">
+                            <div class="kpi-lbl">Custo / Receita</div>
+                            <div class="kpi-val" id="k4-pv">61,7%</div>
+                            <div class="kpi-sub">ideal: abaixo de 70%</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="ctitle">Distribuição do Orçamento</div>
+                        <div style="display:grid;grid-template-columns:1fr 190px;gap:16px;align-items:center">
+                            <div id="rbars"></div>
+                            <div class="cwrap" style="height:190px"><canvas id="c4"></canvas></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="ctitle">Análise de Eficiência e Recomendações</div>
+                        <div id="recs"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════
+     MÓDULO 5 — Sobre o projeto
+══════════════════════════════════════════════ -->
+        <div class="mod" id="m4">
+            <div class="card">
+                <div class="shdr">
+                    <div>
+                        <div class="stitle">Sobre o projeto</div>
+                        <div class="sdesc">Contexto, tecnologia e contribuições do simulador.</div>
+                    </div>
+                </div>
+                <p style="font-size:13px;line-height:1.6;color:#2c2c2c;margin-bottom:12px">Este projeto é um simulador financeiro interativo criado como trabalho para a disciplina de Matemática para Negócios (Desafio 4.0). Ele permite comparar custos, receita, ponto de equilíbrio, cenários de crescimento e alocação de recursos com feedback visual e cálculos em tempo real.</p>
+                <div class="sumrow"><span style="color:var(--text-m)">Tecnologias:</span><span>HTML, CSS, JavaScript, Chart.js</span></div>
+                <div class="sumrow"><span style="color:var(--text-m)">Objetivo:</span><span>Permitir decisões rápidas com visualização de margem, PE e cenários.</span></div>
+                <div class="sumrow"><span style="color:var(--text-m)">Princípios de design:</span><span>Clareza, contraste, responsividade e visual modular.</span></div>
+                <div class="ctitle" style="margin-top:16px">Equipe:</div>
+                <ul style="margin-top:8px;font-size:13px;line-height:1.5;color:#2f2f2f;padding-left:18px">
+                    <li>Daniel Mathias</li>
+                    <li>Herbert Fontenelle</li>
+                    <li>Jó Barros</li>
+                    <li>Erik Licá</li>
+                    <li>Mauricio Bastos</li>
+                    <li>Luís Thiago</li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- /content -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
