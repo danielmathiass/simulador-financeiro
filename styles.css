@@ -626,3 +626,118 @@ hr {
     grid-template-columns: repeat(2, 1fr)
   }
 }
+
+@media (max-width: 600px) {
+  .hdr {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+    height: auto;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .logo {
+    gap: 8px;
+  }
+
+  .logo-name {
+    font-size: 14px;
+  }
+
+  .logo-desc {
+    font-size: 10px;
+  }
+
+  .hdr-badge {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+
+  .tabs {
+    padding: 0 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .tab {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .content {
+    padding: 12px 10px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .kpis-4,
+  .kpis-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi {
+    padding: 12px;
+  }
+
+  .srow {
+    gap: 6px;
+  }
+
+  .slbl {
+    width: 120px;
+    font-size: 11px;
+  }
+
+  .sval {
+    width: 70px;
+    font-size: 11px;
+  }
+
+  .ptable th,
+  .ptable td {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .stitle {
+    font-size: 13px;
+  }
+
+  .sdesc {
+    font-size: 10px;
+  }
+
+  .shdr {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cwrap {
+    min-height: 180px;
+  }
+
+  .pills {
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .pill {
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 10px;
+  }
+
+  .fcard {
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .logo-mark {
+    width: 24px;
+    height: 24px;
+  }
+}
